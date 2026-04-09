@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -8,7 +8,9 @@ export class Usuario {
         public id: number|null,
         public nome: string,
         public email: string,
-        public status: string
+        public status: string,
+        public tipo: string = "FUNCIONARIO",
+        public restauranteId: number | null = null
     ) { }
 }
 
@@ -27,7 +29,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const router = useRouter();
 
     useEffect(() => {
-        debugger;
         const usuarioRecover = Cookies.get('usuario');
         const tokenRecover = Cookies.get('token');
 
@@ -35,7 +36,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             try {
                 setUsuario(JSON.parse(usuarioRecover));
                 setToken(tokenRecover);
-                
                 router.push(window.location.pathname)
             } catch (e) {
                 console.error(e);
@@ -45,7 +45,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const login = (usuario: Usuario, token: string) => {
-        debugger;
         setUsuario(usuario);
         setToken(token);
         Cookies.set('usuario', JSON.stringify(usuario), { expires: 7 });

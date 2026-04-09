@@ -1,9 +1,8 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import { AuthProvider } from "./context/AuthContext";
+import { MesaProvider } from "./context/MesaContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aula 2026",
-  description: "Aula de desenvolvimento full Stack",
+  title: "ChefOrder",
+  description: "Sistema de comandas e gestao de restaurantes",
 };
 
 export default function RootLayout({
@@ -26,12 +25,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="h-full">
+    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
       <body>
         <AuthProvider>
-          {children}
+          <MesaProvider>
+            {children}
+          </MesaProvider>
         </AuthProvider>
-
       </body>
     </html>
   );

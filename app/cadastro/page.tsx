@@ -1,69 +1,55 @@
-﻿'use client'
+'use client'
 
-import { useRouter } from "next/navigation";
-import { useAuth, Usuario } from "../context/AuthContext";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
-interface LoginResponse{
-    token: string,
-    id: number,
-    nome: string,
-    email: string,
-    status: string,
-    tipo: string,
-    restauranteId: number | null
-}
-
-export default function LoginPage() {
+export default function CadastroPage() {
     const router = useRouter();
-    const {login} = useAuth();
 
-
-    const handleLogin = async ( formData : FormData) => {
-
+    const handleCadastro = async (formData: FormData) => {
+        const nome = formData.get("nome");
         const email = formData.get("email");
         const senha = formData.get("senha");
 
         try{
-            var loginResult = await axios.post<LoginResponse>('http://localhost:8080/auth/login',
-                {email:email,senha:senha});
+            const cadastroResult = await axios.post<number>('http://localhost:8080/auth/cadastro',
+                {nome:nome,email:email,senha:senha});
 
-            if(loginResult.status !== 200){
-                alert("Credenciais inválidas!")
+            if(cadastroResult.status !== 200){
+                alert("Não foi possível concluir o cadastro!")
                 return;
             }
 
-            const usuarioLogin = new Usuario(
-                loginResult.data.id,
-                loginResult.data.nome,
-                loginResult.data.email,
-                loginResult.data.status,
-                loginResult.data.tipo,
-                loginResult.data.restauranteId
-            );
-            login(usuarioLogin,loginResult.data.token);
-
+            alert("Restaurante cadastrado com sucesso! Agora faça login.")
+            router.push("/login")
         }catch(error){
-            alert("Erro ao autenticar no ChefOrder!")
-            return;
+            alert("Erro ao cadastrar restaurante!")
         }
-
-        router.push("/home")
     }
-
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-orange-50 to-white px-4">
             <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-amber-100">
-
                 <div className="mb-8 text-center">
                     <p className="text-xs uppercase tracking-[0.2em] font-semibold text-amber-700 mb-2">ChefOrder</p>
                     <h1 className="text-3xl font-bold text-amber-950 tracking-tight">
-                        Login do Sistema
+                        Cadastro de Restaurante
                     </h1>
                 </div>
 
-                <form action={handleLogin} className="space-y-6">
+                <form action={handleCadastro} className="space-y-6">
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-amber-900 block">
+                            Nome
+                        </label>
+                        <input
+                            name="nome"
+                            type="text"
+                            required
+                            placeholder="Nome do restaurante"
+                            className="w-full px-4 py-3 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all placeholder:text-amber-400"
+                        />
+                    </div>
 
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-amber-900 block">
@@ -72,20 +58,20 @@ export default function LoginPage() {
                         <input
                             name="email"
                             type="email"
-                            placeholder="seu@email.com"
+                            required
+                            placeholder="restaurante@cheforder.com"
                             className="w-full px-4 py-3 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all placeholder:text-amber-400"
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                            <label className="text-sm font-medium text-amber-900 block">
-                                Senha
-                            </label>
-                        </div>
+                        <label className="text-sm font-medium text-amber-900 block">
+                            Senha
+                        </label>
                         <input
                             name="senha"
                             type="password"
+                            required
                             placeholder="********"
                             className="w-full px-4 py-3 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                         />
@@ -95,7 +81,7 @@ export default function LoginPage() {
                         type="submit"
                         className="w-full bg-amber-700 hover:bg-amber-800 text-white font-semibold py-3 rounded-lg transition-colors shadow-lg shadow-amber-200 active:scale-[0.98]"
                     >
-                        Entrar no Painel
+                        Cadastrar Restaurante
                     </button>
                 </form>
             </div>

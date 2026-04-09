@@ -2,6 +2,7 @@ package com.senac.aula012026.aula012026.model.entities;
 
 
 import com.senac.aula012026.aula012026.model.enuns.EnumStatusUsuario;
+import com.senac.aula012026.aula012026.model.enuns.EnumTipoUsuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,12 @@ public class Usuario {
 
     private String senha;
 
+    @Enumerated(EnumType.STRING)
     private EnumStatusUsuario status = EnumStatusUsuario.ATIVO;
+
+    @Enumerated(EnumType.STRING)
+    private EnumTipoUsuario tipo = EnumTipoUsuario.FUNCIONARIO;
+
+    private Long restauranteId;
 
 }
