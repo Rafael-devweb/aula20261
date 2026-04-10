@@ -1,13 +1,13 @@
 import Link from "next/link";
-import ClienteForm from "../componentes/ClienteForm";
+import VeiculoForm from "../componentes/VeiculoForm";
 
-export default function cadastrarCliente() {
+export default function cadastrarVeiculo() {
     return (
         <div className="w-full min-h-screen bg-zinc-100 p-4 md:p-10">
             <div className="max-w-7xl mx-auto"> 
                 <div className="flex flex-col gap-3 mb-8">
                     <Link
-                        href="/clientes"
+                        href="/veiculos"
                         className="group flex items-center text-sm font-medium text-zinc-600 hover:text-zinc-800 transition-colors"
                     >
                         <span className="mr-2 transition-transform group-hover:-translate-x-1">&larr;</span>
@@ -16,16 +16,16 @@ export default function cadastrarCliente() {
 
                     <div className="space-y-1 border-l-4 border-zinc-700 pl-4">
                         <h1 className="text-3xl font-bold text-zinc-900 tracking-tight">
-                            Novo Cliente
+                            Novo Veículo
                         </h1>
                         <p className="text-sm text-zinc-600">
-                            Preencha os dados para registrar um novo cliente.
+                            Preencha os dados para registrar um novo veículo na oficina.
                         </p>
                     </div>
                 </div>
 
                 <div className="bg-white rounded-2xl shadow-sm border border-zinc-200 p-6 md:p-8">
-                    <ClienteForm />
+                    <VeiculoForm />
                 </div>
             </div>
         </div>

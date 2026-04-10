@@ -1,26 +1,30 @@
 package com.senac.aula012026.aula012026.model.entities;
 
-import com.senac.aula012026.aula012026.model.enuns.EnumStatusMesa;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "mesa")
+@Table(name = "veiculo")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Mesa {
+public class Veiculo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String numero;
+    private String placa;
 
-    @Enumerated(EnumType.STRING)
-    private EnumStatusMesa status = EnumStatusMesa.LIVRE;
+    private String marca;
 
-    private Long restauranteId;
+    private String modelo;
+
+    private String ano;
+
+    private Long clienteId;
+
+    private Long oficinaId;
 }

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import { useAuth } from "@/app/context/AuthContext";
 import axios from "axios";
 import Link from "next/link";
@@ -20,7 +20,7 @@ export default function UsuarioForm({ usuarioExistente }: UsuarioFormProps) {
             senha: '',
             status: 'ATIVO',
             tipo: 'FUNCIONARIO',
-            restauranteId: usuarioLogado?.tipo === "RESTAURANTE" ? usuarioLogado.id : usuarioLogado?.restauranteId
+            oficinaId: usuarioLogado?.tipo === "OFICINA" ? usuarioLogado.id : usuarioLogado?.oficinaId
         }
     );
 
@@ -31,16 +31,19 @@ export default function UsuarioForm({ usuarioExistente }: UsuarioFormProps) {
     }
 
     const handleSalvar = async (formData: FormData) => {
-       const restauranteId = usuarioLogado?.tipo === "RESTAURANTE" ? usuarioLogado.id : usuarioLogado?.restauranteId;
+       const oficinaId = usuarioLogado?.tipo === "OFICINA" ? usuarioLogado.id : usuarioLogado?.oficinaId;
+       if(!oficinaId){
+        return;
+       }
 
        const usuarioSalvar = {
             ...usuario,
             tipo: "FUNCIONARIO",
-            restauranteId: restauranteId
+            oficinaId: oficinaId
        };
 
        if(usuario.id){
-            var dadosAtualizar = await axios.put('http://localhost:8080/usuarios/'+usuario.id, usuarioSalvar);
+            var dadosAtualizar = await axios.put('http://localhost:8080/usuarios/'+usuario.id+'?oficinaId='+oficinaId, usuarioSalvar);
             if(dadosAtualizar.status!== 200){
                 return;
             }
@@ -64,7 +67,7 @@ export default function UsuarioForm({ usuarioExistente }: UsuarioFormProps) {
        <form action={handleSalvar} className="w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-amber-900">
+                <label className="text-sm font-semibold text-zinc-800">
                     Nome
                 </label>
                 <input
@@ -73,12 +76,12 @@ export default function UsuarioForm({ usuarioExistente }: UsuarioFormProps) {
                     value={usuario.nome}
                     onChange={(e) => handleChange('nome', e.target.value)}
                     placeholder="Nome do funcionário"
-                    className="w-full px-4 py-3 rounded-xl border border-amber-200 focus:ring-2 focus:ring-amber-500 transition-all outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-zinc-300 focus:ring-2 focus:ring-slate-400 transition-all outline-none"
                 />
             </div>
 
             <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-amber-900">
+                <label className="text-sm font-semibold text-zinc-800">
                     E-mail
                 </label>
                 <input
@@ -87,12 +90,12 @@ export default function UsuarioForm({ usuarioExistente }: UsuarioFormProps) {
                     required
                     value={usuario.email}
                     onChange={(e) => handleChange('email', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-amber-200 focus:ring-2 focus:ring-amber-500 transition-all outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-zinc-300 focus:ring-2 focus:ring-slate-400 transition-all outline-none"
                 />
             </div>
 
             <div className="flex flex-col gap-1.5 md:col-span-2">
-                <label className="text-sm font-semibold text-amber-900">
+                <label className="text-sm font-semibold text-zinc-800">
                     Senha
                 </label>
                 <input
@@ -101,20 +104,20 @@ export default function UsuarioForm({ usuarioExistente }: UsuarioFormProps) {
                     required
                     value={usuario.senha || ''}
                     onChange={(e) => handleChange('senha', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-amber-200 focus:ring-2 focus:ring-amber-500 transition-all outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-zinc-300 focus:ring-2 focus:ring-slate-400 transition-all outline-none"
                 />
             </div>
 
-            <div className="md:col-span-2 flex items-center justify-end gap-6 pt-6 mt-6 border-t border-amber-100">
+            <div className="md:col-span-2 flex items-center justify-end gap-6 pt-6 mt-6 border-t border-zinc-200">
                 <Link 
                     href="/usuarios" 
-                    className="text-sm font-bold text-amber-900/60 hover:text-amber-900 transition-colors"
+                    className="text-sm font-bold text-zinc-500 hover:text-zinc-700 transition-colors"
                 >
                     CANCELAR
                 </Link>
                 <button 
                     type="submit" 
-                    className="px-10 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-xl shadow-lg shadow-amber-200 transition-all active:scale-95"
+                    className="px-10 py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-xl shadow-lg shadow-zinc-900/20 transition-all active:scale-95"
                 >
                     SALVAR ALTERAÇÕES
                 </button>

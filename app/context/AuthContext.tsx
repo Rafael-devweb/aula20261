@@ -10,7 +10,7 @@ export class Usuario {
         public email: string,
         public status: string,
         public tipo: string = "FUNCIONARIO",
-        public restauranteId: number | null = null
+        public oficinaId: number | null = null
     ) { }
 }
 

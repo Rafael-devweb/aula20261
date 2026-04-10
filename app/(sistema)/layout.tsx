@@ -33,7 +33,7 @@ export default function SistemaLayout({ children }:
       <div className="flex flex-col flex-1 min-w-0">
         <Header />
 
-        <main className="flex-1 p-4 md:p-8 bg-amber-50">
+        <main className="flex-1 p-4 md:p-8 bg-zinc-100">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>

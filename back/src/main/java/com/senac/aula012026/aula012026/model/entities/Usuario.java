@@ -33,6 +33,6 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private EnumTipoUsuario tipo = EnumTipoUsuario.FUNCIONARIO;
 
-    private Long restauranteId;
+    private Long oficinaId;
 
 }

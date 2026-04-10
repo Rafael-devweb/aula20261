@@ -12,9 +12,9 @@ public class SwaggerConfiguration {
     public OpenAPI customOpenApi() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API ChefOrder")
+                        .title("API AutoFix")
                         .version("1.0")
-                        .description("API de apoio ao sistema de comandas e gestão de restaurantes")
+                        .description("API de apoio ao sistema de gestão de oficinas mecânicas")
                         .termsOfService("http://mtxsistemas.com")
                 );
     }

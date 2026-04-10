@@ -20,52 +20,52 @@ export default function CadastroPage() {
                 return;
             }
 
-            alert("Restaurante cadastrado com sucesso! Agora faça login.")
+            alert("Oficina cadastrada com sucesso! Agora faça login.")
             router.push("/login")
         }catch(error){
-            alert("Erro ao cadastrar restaurante!")
+            alert("Erro ao cadastrar oficina!")
         }
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-orange-50 to-white px-4">
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-amber-100">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-800 via-slate-800 to-zinc-900 px-4">
+            <div className="w-full max-w-md bg-zinc-900 rounded-2xl shadow-xl p-8 border border-zinc-700">
                 <div className="mb-8 text-center">
-                    <p className="text-xs uppercase tracking-[0.2em] font-semibold text-amber-700 mb-2">ChefOrder</p>
-                    <h1 className="text-3xl font-bold text-amber-950 tracking-tight">
-                        Cadastro de Restaurante
+                    <p className="text-xs uppercase tracking-[0.2em] font-semibold text-slate-300 mb-2">AutoFix</p>
+                    <h1 className="text-3xl font-bold text-white tracking-tight">
+                        Cadastro de Oficina
                     </h1>
                 </div>
 
                 <form action={handleCadastro} className="space-y-6">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-amber-900 block">
-                            Nome
+                        <label className="text-sm font-medium text-slate-200 block">
+                            Nome fantasia
                         </label>
                         <input
                             name="nome"
                             type="text"
                             required
-                            placeholder="Nome do restaurante"
-                            className="w-full px-4 py-3 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all placeholder:text-amber-400"
+                            placeholder="Nome da oficina"
+                            className="w-full px-4 py-3 rounded-lg border border-zinc-600 bg-zinc-800 text-white focus:ring-2 focus:ring-slate-400 focus:border-slate-400 outline-none transition-all placeholder:text-zinc-400"
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-amber-900 block">
+                        <label className="text-sm font-medium text-slate-200 block">
                             E-mail
                         </label>
                         <input
                             name="email"
                             type="email"
                             required
-                            placeholder="restaurante@cheforder.com"
-                            className="w-full px-4 py-3 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all placeholder:text-amber-400"
+                            placeholder="oficina@autofix.com"
+                            className="w-full px-4 py-3 rounded-lg border border-zinc-600 bg-zinc-800 text-white focus:ring-2 focus:ring-slate-400 focus:border-slate-400 outline-none transition-all placeholder:text-zinc-400"
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-amber-900 block">
+                        <label className="text-sm font-medium text-slate-200 block">
                             Senha
                         </label>
                         <input
@@ -73,15 +73,15 @@ export default function CadastroPage() {
                             type="password"
                             required
                             placeholder="********"
-                            className="w-full px-4 py-3 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                            className="w-full px-4 py-3 rounded-lg border border-zinc-600 bg-zinc-800 text-white focus:ring-2 focus:ring-slate-400 focus:border-slate-400 outline-none transition-all"
                         />
                     </div>
 
                     <button
                         type="submit"
-                        className="w-full bg-amber-700 hover:bg-amber-800 text-white font-semibold py-3 rounded-lg transition-colors shadow-lg shadow-amber-200 active:scale-[0.98]"
+                        className="w-full bg-slate-500 hover:bg-slate-400 text-zinc-900 font-semibold py-3 rounded-lg transition-colors shadow-lg shadow-zinc-900/40 active:scale-[0.98]"
                     >
-                        Cadastrar Restaurante
+                        Cadastrar Oficina
                     </button>
                 </form>
             </div>

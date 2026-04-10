@@ -1,6 +1,5 @@
 package com.senac.aula012026.aula012026.controllers;
 
-
 import com.senac.aula012026.aula012026.model.DTO.CadastroRequest;
 import com.senac.aula012026.aula012026.model.DTO.LoginRequest;
 import com.senac.aula012026.aula012026.model.DTO.LoginResponse;
@@ -33,7 +32,7 @@ public class AuthController {
 
         var statusUsuario = usuario.getStatus() != null ? usuario.getStatus().name() : EnumStatusUsuario.ATIVO.name();
         var tipoUsuario = usuario.getTipo() != null ? usuario.getTipo().name() : EnumTipoUsuario.FUNCIONARIO.name();
-        var restauranteId = usuario.getTipo() == EnumTipoUsuario.RESTAURANTE ? usuario.getId() : usuario.getRestauranteId();
+        var oficinaId = usuario.getTipo() == EnumTipoUsuario.OFICINA ? usuario.getId() : usuario.getOficinaId();
 
         return ResponseEntity.ok(
                 new LoginResponse(
@@ -43,7 +42,7 @@ public class AuthController {
                         usuario.getEmail(),
                         statusUsuario,
                         tipoUsuario,
-                        restauranteId
+                        oficinaId
                 )
         );
     }
@@ -60,10 +59,10 @@ public class AuthController {
         usuario.setEmail(cadastroRequest.email());
         usuario.setSenha(cadastroRequest.senha());
         usuario.setStatus(EnumStatusUsuario.ATIVO);
-        usuario.setTipo(EnumTipoUsuario.RESTAURANTE);
+        usuario.setTipo(EnumTipoUsuario.OFICINA);
 
         var usuarioNovo = usuarioRepository.save(usuario);
-        usuarioNovo.setRestauranteId(usuarioNovo.getId());
+        usuarioNovo.setOficinaId(usuarioNovo.getId());
         usuarioRepository.save(usuarioNovo);
 
         return ResponseEntity.ok(usuarioNovo.getId());

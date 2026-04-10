@@ -1,8 +1,9 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./context/AuthContext";
-import { MesaProvider } from "./context/MesaContext";
+import { ClienteProvider } from "./context/ClienteContext";
+import { VeiculoProvider } from "./context/VeiculoContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ChefOrder",
-  description: "Sistema de comandas e gestao de restaurantes",
+  title: "AutoFix",
+  description: "Sistema de gestão de oficinas mecânicas",
 };
 
 export default function RootLayout({
@@ -28,9 +29,11 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
       <body>
         <AuthProvider>
-          <MesaProvider>
-            {children}
-          </MesaProvider>
+          <ClienteProvider>
+            <VeiculoProvider>
+              {children}
+            </VeiculoProvider>
+          </ClienteProvider>
         </AuthProvider>
       </body>
     </html>

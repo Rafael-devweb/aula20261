@@ -1,40 +1,40 @@
-﻿'use client'
+'use client'
 import { useAuth } from "@/app/context/AuthContext";
-import { useMesa } from "@/app/context/MesaContext";
+import { useCliente } from "@/app/context/ClienteContext";
+import { useVeiculo } from "@/app/context/VeiculoContext";
 import { useEffect } from "react";
 
 export default function Home(){
     const { usuario } = useAuth();
-    const { mesas, carregarMesas } = useMesa();
+    const { clientes, carregarClientes } = useCliente();
+    const { veiculos, carregarVeiculos } = useVeiculo();
 
     useEffect(() => {
-        const restauranteId = usuario?.tipo === "RESTAURANTE" ? usuario?.id : usuario?.restauranteId;
-        if(restauranteId){
-            carregarMesas(restauranteId);
+        const oficinaId = usuario?.tipo === "OFICINA" ? usuario?.id : usuario?.oficinaId;
+        if(oficinaId){
+            carregarClientes(oficinaId);
+            carregarVeiculos(oficinaId);
         }
     }, [usuario]);
 
-    const mesasLivres = mesas.filter(m => m.status === "LIVRE").length;
-    const mesasOcupadas = mesas.filter(m => m.status === "OCUPADA").length;
-
     return(
         <div className="space-y-6">
-            <div className="rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-100 to-orange-100 p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">ChefOrder</p>
-                <h1 className="mt-2 text-3xl font-bold text-amber-950">Painel Operacional</h1>
-                <p className="mt-2 text-amber-900/80">
-                    Bem-vindo, {usuario?.nome || 'Restaurante'}. Gerencie mesas e cadastros do seu ambiente em tempo real.
+            <div className="rounded-2xl border border-zinc-600 bg-gradient-to-r from-zinc-800 to-slate-800 p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">AutoFix</p>
+                <h1 className="mt-2 text-3xl font-bold text-white">Painel Operacional</h1>
+                <p className="mt-2 text-zinc-300">
+                    Bem-vindo, {usuario?.nome || 'Oficina'}. Gerencie clientes, veículos e equipe do seu ambiente em tempo real.
                 </p>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-                <div className="rounded-xl border border-green-200 bg-green-50 p-5">
-                    <p className="text-sm text-green-700">Mesas livres</p>
-                    <p className="text-3xl font-bold text-green-900 mt-2">{mesasLivres}</p>
+                <div className="rounded-xl border border-zinc-300 bg-white p-5">
+                    <p className="text-sm text-zinc-600">Clientes cadastrados</p>
+                    <p className="text-3xl font-bold text-zinc-900 mt-2">{clientes.length}</p>
                 </div>
-                <div className="rounded-xl border border-red-200 bg-red-50 p-5">
-                    <p className="text-sm text-red-700">Mesas ocupadas</p>
-                    <p className="text-3xl font-bold text-red-900 mt-2">{mesasOcupadas}</p>
+                <div className="rounded-xl border border-zinc-300 bg-white p-5">
+                    <p className="text-sm text-zinc-600">Veículos cadastrados</p>
+                    <p className="text-3xl font-bold text-zinc-900 mt-2">{veiculos.length}</p>
                 </div>
             </div>
         </div>

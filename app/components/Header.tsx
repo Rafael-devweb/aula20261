@@ -7,11 +7,11 @@ export default function Header(){
   const{usuario,logout} = useAuth();
 
   return (
-    <header className="w-full bg-white border-b border-amber-100 sticky top-0 z-50">
+    <header className="w-full bg-zinc-900 border-b border-zinc-700 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center border border-amber-200">
+            <div className="w-9 h-9 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700">
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 viewBox="0 0 24 24" 
@@ -20,21 +20,21 @@ export default function Header(){
                 strokeWidth="2" 
                 strokeLinecap="round" 
                 strokeLinejoin="round" 
-                className="w-5 h-5 text-amber-800"
+                className="w-5 h-5 text-slate-300"
               >
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
             </div>
-            <span className="text-sm font-semibold text-amber-950 hidden sm:block">
-              {usuario?.nome.toLocaleUpperCase()||'RESTAURANTE NÃO IDENTIFICADO'}
+            <span className="text-sm font-semibold text-zinc-100 hidden sm:block">
+              {usuario?.nome.toLocaleUpperCase()||'OFICINA NÃO IDENTIFICADA'}
             </span>
           </div>
 
           <button 
             type="button"
             onClick={logout}
-            className="group flex items-center gap-2 px-4 py-2 text-sm font-medium text-amber-900 transition-all rounded-lg hover:bg-amber-50 hover:text-red-600 border border-transparent hover:border-amber-200"
+            className="group flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-200 transition-all rounded-lg hover:bg-zinc-800 hover:text-red-400 border border-transparent hover:border-zinc-700"
           >
             <span>Sair</span>
             <svg 
