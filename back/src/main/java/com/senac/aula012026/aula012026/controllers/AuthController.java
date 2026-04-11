@@ -7,10 +7,15 @@ import com.senac.aula012026.aula012026.model.entities.Usuario;
 import com.senac.aula012026.aula012026.model.enuns.EnumStatusUsuario;
 import com.senac.aula012026.aula012026.model.enuns.EnumTipoUsuario;
 import com.senac.aula012026.aula012026.model.repository.UsuarioRepository;
+import com.senac.aula012026.aula012026.services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/auth")
@@ -18,6 +23,9 @@ public class AuthController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TokenService tokenService;
 
 
     @PostMapping("/login")
@@ -28,15 +36,17 @@ public class AuthController {
 
         if(usuario == null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
         }
 
+        var token = tokenService.gerarToken(loginRequest.email());
         var statusUsuario = usuario.getStatus() != null ? usuario.getStatus().name() : EnumStatusUsuario.ATIVO.name();
         var tipoUsuario = usuario.getTipo() != null ? usuario.getTipo().name() : EnumTipoUsuario.FUNCIONARIO.name();
         var oficinaId = usuario.getTipo() == EnumTipoUsuario.OFICINA ? usuario.getId() : usuario.getOficinaId();
 
         return ResponseEntity.ok(
                 new LoginResponse(
-                        "Sasdasdas123",
+                        token,
                         usuario.getId(),
                         usuario.getNome(),
                         usuario.getEmail(),
@@ -67,5 +77,7 @@ public class AuthController {
 
         return ResponseEntity.ok(usuarioNovo.getId());
     }
+
+
 
 }
