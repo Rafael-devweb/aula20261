@@ -1,18 +1,12 @@
 ﻿'use client'
 
 import { useRouter } from "next/navigation";
-import { useAuth, Usuario } from "../context/AuthContext";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
+import { Usuario } from "../types/usuarios";
+import { LoginResponse } from "../types/auth";
 
-interface LoginResponse{
-    token: string,
-    id: number,
-    nome: string,
-    email: string,
-    status: string,
-    tipo: string,
-    oficinaId: number | null
-}
+
 
 export default function LoginPage() {
     const router = useRouter();

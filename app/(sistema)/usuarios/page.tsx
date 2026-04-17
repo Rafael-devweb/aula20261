@@ -1,8 +1,11 @@
 'use client'
-import { useAuth, Usuario } from "@/app/context/AuthContext";
+
+import { useAuth } from "@/app/context/AuthContext";
+import { Usuario } from "@/app/types/usuarios";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { buscarListaUsuarios } from "../services/usuarioService";
 
 export default function Usuarios() {
 
@@ -19,19 +22,12 @@ export default function Usuarios() {
         if(!usuarioLogado) return;
 
         try {
-            const oficinaId = usuarioLogado.tipo === "OFICINA" ? usuarioLogado.id : usuarioLogado.oficinaId;
-            if(!oficinaId){
-                return;
-            }
-            const dados = await axios.get<Usuario[]>('http://localhost:8080/usuarios?oficinaId='+oficinaId+'&usuarioLogadoId='+usuarioLogado.id);
-
-            if(dados.status!==200){
-                alert("Erro ao carregar dados dos funcionários!");
-            }
-
-            setUsuarios(dados.data);
+            const dados = await buscarListaUsuarios();
+           setUsuarios(dados);
+        
 
         } catch (error) {
+            alert("Erro ao carregar dados do usuario")
             console.error(error)
         }
     }
