@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.senac.aula012026.aula012026.model.entities.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,16 @@ public class TokenService {
                     .withSubject(email)
                     .withExpiresAt(gerarDataExpiraçao())
                     .sign(algorithm);
+
+            var usuario = usuarioRepesitory.findAll()
+                    .stream()
+                    .filter(u-> u.getEmail()
+                            .equals(email))
+                    .findFirst()
+                    .onElse(null);
+
+
+            tokenRepository.save(new Token(token,usuario));
 
              return token;
 

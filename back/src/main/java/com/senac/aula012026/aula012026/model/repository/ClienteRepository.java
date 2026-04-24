@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     List<Cliente> findByOficinaId(Long oficinaId);
+
+    boolean existClienteByEmailContainingTelefone(String nome, String telefone);
 }

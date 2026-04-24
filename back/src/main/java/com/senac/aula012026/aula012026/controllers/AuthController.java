@@ -8,6 +8,7 @@ import com.senac.aula012026.aula012026.model.enuns.EnumStatusUsuario;
 import com.senac.aula012026.aula012026.model.enuns.EnumTipoUsuario;
 import com.senac.aula012026.aula012026.model.repository.UsuarioRepository;
 import com.senac.aula012026.aula012026.services.TokenService;
+import com.senac.aula012026.aula012026.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,8 @@ public class AuthController {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UsuarioService usuarioService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
@@ -34,7 +37,9 @@ public class AuthController {
                 .findByEmailAndSenha(loginRequest.email(), loginRequest.senha())
                 .orElse(null);
 
-        if(usuario == null){
+        if(usuarioService.ValidaUsuarioSenha(loginRequest)){
+
+
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         }
@@ -62,6 +67,7 @@ public class AuthController {
         var usuarioExistente = usuarioRepository.findByEmail(cadastroRequest.email()).orElse(null);
         if(usuarioExistente != null){
             return ResponseEntity.badRequest().body("E-mail já cadastrado!");
+
         }
 
         var usuario = new Usuario();
