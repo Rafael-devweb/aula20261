@@ -1,8 +1,15 @@
 package com.senac.aula012026.aula012026.model.repository;
 
 
+import com.senac.aula012026.aula012026.model.entities.Token;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface TokenRepository extends jpaRepository<Token,Long> {
+public interface TokenRepository extends JpaRepository<Token,Long> {
+
+    Optional<Token> findTokenByToken(String token);
+
 }

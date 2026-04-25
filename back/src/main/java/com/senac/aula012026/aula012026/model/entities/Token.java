@@ -21,15 +21,16 @@ public class Token {
       private String token;
 
 
-      @ManyToOne
-      @JoinColumn(name = "usaurio_id",referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "usuario_id",referencedColumnName = "id")
+    private Usuario usuario;
 
-      private Usuario usuario;
+    public Token(String token, Usuario usuario){
+        this.token = token;
+        this.usuario = usuario;
+    }
 
-      private Token(String toke, Usuario usuario)
-
-
-  }
+}
 
 
 

@@ -4,6 +4,7 @@ import com.senac.aula012026.aula012026.model.entities.Usuario;
 import com.senac.aula012026.aula012026.model.enuns.EnumStatusUsuario;
 import com.senac.aula012026.aula012026.model.enuns.EnumTipoUsuario;
 import com.senac.aula012026.aula012026.model.repository.UsuarioRepository;
+import com.senac.aula012026.aula012026.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ import java.util.List;
 @RequestMapping("/usuarios")
 @Tag(name = "Usuários controller",description = "Controladora responsável por gerenciar os usuários!")
 public class UsuarioController {
+
+    @Autowired
+    private UsuarioService usuarioService;
+
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -72,35 +77,12 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar usuário",description = "Método responsável por atualizar usuário")
-    public ResponseEntity<?> alterarUsuario (@PathVariable Long id, @RequestParam Long oficinaId, @RequestBody Usuario usuario){
+    public ResponseEntity<?> alterarUsuario (@PathVariable Long id, @RequestParam Long oficinaId, @RequestBody Usuario usuario) {
 
-        var usuarioBanco = usuarioRepository.findById(id).orElse(null);
+        var alterarUsuarioResult = usuarioService.AlterarUsuario(id, usuario, oficinaId);
 
-        if (usuarioBanco != null){
-            if(!oficinaId.equals(usuarioBanco.getOficinaId())){
-                return ResponseEntity.notFound().build();
-            }
+        return alterarUsuarioResult ? ResponseEntity.ok("Atulizado com sucesso") : ResponseEntity.notFound().build();
 
-            usuarioBanco.setEmail(usuario.getEmail());
-            usuarioBanco.setNome(usuario.getNome());
-            usuarioBanco.setSenha(usuario.getSenha());
-            usuarioBanco.setStatus(usuario.getStatus());
-
-            if(usuarioBanco.getTipo() == EnumTipoUsuario.OFICINA){
-                usuarioBanco.setTipo(EnumTipoUsuario.OFICINA);
-                usuarioBanco.setOficinaId(usuarioBanco.getId());
-            }else{
-                usuarioBanco.setTipo(EnumTipoUsuario.FUNCIONARIO);
-                usuarioBanco.setOficinaId(usuario.getOficinaId());
-            }
-
-            usuarioRepository.save(usuarioBanco);
-
-            return ResponseEntity.ok("Atualizado com sucesso!");
-        }
-
-
-        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}/status")

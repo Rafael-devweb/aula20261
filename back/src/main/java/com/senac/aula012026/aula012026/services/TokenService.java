@@ -5,6 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.senac.aula012026.aula012026.model.entities.Token;
+import com.senac.aula012026.aula012026.model.repository.TokenRepository;
+import com.senac.aula012026.aula012026.model.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +25,13 @@ public class TokenService {
     private String emissor;
 
     @Value("${spring.tempoexpiracao}")
-    private Long tempoexpiracao;
+    private Long tempoExpiracao;
+
+    @Autowired
+    private TokenRepository tokenRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public DecodedJWT validarToken(String token) {
 
@@ -43,29 +52,27 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer(emissor)
                     .withSubject(email)
-                    .withExpiresAt(gerarDataExpiraçao())
+                    .withExpiresAt(gerarDataExpiracao())
                     .sign(algorithm);
 
-            var usuario = usuarioRepesitory.findAll()
+            var usuario = usuarioRepository.findAll()
                     .stream()
-                    .filter(u-> u.getEmail()
-                            .equals(email))
-                    .findFirst()
-                    .onElse(null);
-
+                    .filter(u -> u.getEmail().equals(email)).findFirst().orElse(null);
 
             tokenRepository.save(new Token(token,usuario));
 
-             return token;
+            return token;
 
 
-        } catch (Exception e) {
-            return null;
+        }catch (Exception e){
+
+            return  null;
         }
-
     }
-    private Instant gerarDataExpiraçao(){
-        return LocalDateTime.now().plusMinutes(tempoexpiracao).toInstant(ZoneOffset.of("-03:00"));
+
+    private Instant gerarDataExpiracao(){
+
+        return LocalDateTime.now().plusMinutes(tempoExpiracao).toInstant(ZoneOffset.of("-03:00"));
     }
 
 }

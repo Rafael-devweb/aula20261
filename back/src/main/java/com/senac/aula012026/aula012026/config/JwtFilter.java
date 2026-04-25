@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -18,62 +18,61 @@ import java.util.Collections;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-
     @Autowired
     private TokenService tokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
 
         String path = request.getRequestURI();
 
-        //liberaçao de metodos para nao trvar o token
+        // Liberação de metodos para nao travar o token JWT
         if(path.equals("/auth/login")
                 || path.startsWith("/swagger-ui")
                 || path.startsWith("/webjars")
-                || path.startsWith("/swagger-resoucer")
+                || path.startsWith("/swagger-resources")
                 || path.startsWith("/v3/api-docs")
-                || request.getMethod().startsWith("OPTIONS"))
+                || request.getMethod().startsWith("OPTIONS") )
         {
-
             filterChain.doFilter(request,response);
             return;
-
         }
 
-     String header = request.getHeader("Authorization");
-        if (header != null && header.startsWith("Bearer ")){
+        String header = request.getHeader("Authorization");
 
-            String token = header.replace("Bearer ", "");
+        if(header != null&& header.startsWith("Bearer ")){
+            String token = header.replace("Bearer ","");
 
-            //validar token JWT
+            //Validar TOken JWT
+            var retornotoken =tokenService.validarToken(token);
 
-            var retornotoken = tokenService.validarToken(token);
+            var usuarioLogado  = retornotoken;
 
-            var usaurioLogado =retornotoken;
+            UsernamePasswordAuthenticationToken usuario = new UsernamePasswordAuthenticationToken(
 
-            String username = retornotoken.getSubject();
-
-            UsernamePasswordAuthenticationToken usario =new UsernamePasswordAuthenticationToken(
-                    usaurioLogado,
+                    usuarioLogado,
                     null,
-                    Collections.emptyList()
+                   Collections.emptyList()
+                        );
 
-            );
-
-            SecurityContextHolder.getContext().setAuthentication(usaurioLogado);
-
-            System.out.println("Usuario autentificado" + username);
+            SecurityContextHolder.getContext().setAuthentication(usuario);
 
 
-        }else{
+
+        }else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Token nao informado");
+            response.getWriter().write("Token não informado ou invalido");
             return;
         }
-        filterChain.doFilter(request, response);
+
+        filterChain.doFilter(request,response);
+
+
 
     }
 }
+
+
