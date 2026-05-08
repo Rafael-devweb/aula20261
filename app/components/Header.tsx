@@ -27,7 +27,7 @@ export default function Header(){
               </svg>
             </div>
             <span className="text-sm font-semibold text-zinc-100 hidden sm:block">
-              {usuario?.nome.toLocaleUpperCase()||'OFICINA NÃO IDENTIFICADA'}
+               {usuario?.nome||'Usuario indefinido!'}
             </span>
           </div>
 

@@ -5,7 +5,7 @@ import { Usuario } from "@/app/types/usuarios";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { buscarListaUsuarios } from "../services/usuarioService";
+import { buscarListaUsuarios } from "../../services/usuarioService";
 
 export default function Usuarios() {
 

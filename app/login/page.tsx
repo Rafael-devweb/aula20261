@@ -26,7 +26,7 @@ export default function LoginPage() {
                 alert("Credenciais inválidas!")
                 return;
             }
-
+              debugger;  
             const usuarioLogin = new Usuario(
                 loginResult.data.id,
                 loginResult.data.nome,
