@@ -1,13 +1,15 @@
 'use client'
-import { useAuth } from "@/app/context/AuthContext";
+
 import { useCliente } from "@/app/context/ClienteContext";
 import { useVeiculo } from "@/app/context/VeiculoContext";
+import { store } from "@/app/redux/store";
 import { useEffect } from "react";
 
 export default function Home(){
-    const { usuario } = useAuth();
     const { clientes, carregarClientes } = useCliente();
     const { veiculos, carregarVeiculos } = useVeiculo();
+
+    const usuario = store.getState().auth.usuario;
 
     useEffect(() => {
         const oficinaId = usuario?.tipo === "OFICINA" ? usuario?.id : usuario?.oficinaId;

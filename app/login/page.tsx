@@ -2,15 +2,16 @@
 
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useAuth } from "../context/AuthContext";
 import { Usuario } from "../types/usuarios";
 import { LoginResponse } from "../types/auth";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/slices/authSlice";
 
 
 
 export default function LoginPage() {
     const router = useRouter();
-    const {login} = useAuth();
+    const dispatch = useDispatch();
 
 
     const handleLogin = async ( formData : FormData) => {
@@ -35,7 +36,9 @@ export default function LoginPage() {
                 loginResult.data.tipo,
                 loginResult.data.oficinaId
             );
-            login(usuarioLogin,loginResult.data.token);
+
+            dispatch(login({usuario: {...usuarioLogin}, token: loginResult.data.token}))
+            //login(usuarioLogin,loginResult.data.token);
 
         }catch(error){
             alert("Erro ao autenticar no AutoFix!")

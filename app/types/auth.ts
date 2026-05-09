@@ -1,3 +1,5 @@
+import { Usuario } from "./usuarios";
+
 export interface LoginResponse{
     token: string,
     id: number,
@@ -7,3 +9,8 @@ export interface LoginResponse{
     tipo: string,
     oficinaId: number | null
 }
+ export interface AuthState{
+    usuario: Usuario | null;
+    token: String
+
+ }

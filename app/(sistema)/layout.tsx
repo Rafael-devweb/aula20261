@@ -1,17 +1,19 @@
 ﻿'use client'
 import { useEffect } from "react";
 import Header from "../components/Header";
-import { useAuth } from "../context/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export default function SistemaLayout({ children }:
   { children: React.ReactNode }) {
 
-  const { usuario } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+
+  const usuario = useSelector((state:RootState) => state.auth.usuario);
 
   useEffect(() => {
     if (usuario == null) {

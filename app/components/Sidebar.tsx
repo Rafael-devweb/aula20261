@@ -1,10 +1,10 @@
 ﻿'use client'
 import Link from "next/link";
-import { useAuth } from "../context/AuthContext";
+import { store } from "../redux/store";
 
 export default function Sidebar() {
-    const { usuario } = useAuth();
 
+    const usuario = store.getState().auth.usuario
     return (
         <aside className="sticky top-0 h-screen w-64 bg-zinc-900 text-zinc-100 flex flex-col border-r border-zinc-700 shrink-0">
             <div className="p-6 text-2xl font-bold border-b border-zinc-700">

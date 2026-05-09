@@ -1,10 +1,14 @@
 ﻿'use client';
 
-import { useAuth } from "../context/AuthContext";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/slices/authSlice";
+import { store } from "../redux/store";
 
-export default function Header(){
 
-  const{usuario,logout} = useAuth();
+export default function Header() {
+
+  const dispatch = useDispatch();
+  const usuario = store.getState().auth.usuario
 
   return (
     <header className="w-full bg-zinc-900 border-b border-zinc-700 sticky top-0 z-50">
@@ -12,14 +16,14 @@ export default function Header(){
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="w-5 h-5 text-slate-300"
               >
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
@@ -27,34 +31,38 @@ export default function Header(){
               </svg>
             </div>
             <span className="text-sm font-semibold text-zinc-100 hidden sm:block">
-               {usuario?.nome||'Usuario indefinido!'}
+              {usuario?.nome || 'Usuario indefinido!'}
+
             </span>
           </div>
 
-          <button 
-            type="button"
-            onClick={logout}
-            className="group flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-200 transition-all rounded-lg hover:bg-zinc-800 hover:text-red-400 border border-transparent hover:border-zinc-700"
-          >
-            <span>Sair</span>
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              className="w-4 h-4 transition-transform group-hover:translate-x-1"
-            >
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
-          </button>
+          <button
+           type="button"
+            onClick={(e) => {
+              dispatch(logout());
+            }}
 
-        </div>
+          className="group flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-200 transition-all rounded-lg hover:bg-zinc-800 hover:text-red-400 border border-transparent hover:border-zinc-700"
+          >
+          <span>Sair</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-4 h-4 transition-transform group-hover:translate-x-1"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </button>
+
       </div>
-    </header>
+    </div>
+    </header >
   );
 }
