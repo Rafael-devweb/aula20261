@@ -1,3 +1,4 @@
+'use client'
 import { Oficina } from "@/app/types/oficina";
 import api from "./api";
 

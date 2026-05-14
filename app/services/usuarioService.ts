@@ -1,8 +1,8 @@
+'use client'
 import { Usuario } from "@/app/types/usuarios";
 import api from "./api";
 
 
- 
 export async function buscarListaUsuarios(): Promise<Usuario[]> {
     const dados = await api.get<Usuario[]>('/usuarios');
 
