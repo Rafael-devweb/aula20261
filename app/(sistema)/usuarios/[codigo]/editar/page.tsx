@@ -4,16 +4,20 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import UsuarioForm from "../../componentes/UsuarioForm";
 import axios from "axios";
-import { useAuth } from "@/app/context/AuthContext";
+import { store } from "@/app/redux/store";
+
 
 export default function EditarUsuario(){
 
     const params = useParams()
     const router = useRouter()
     const codigo = Number(params.codigo);
-    const { usuario: usuarioLogado } = useAuth();
+     const usuarioLogado = store.getState().auth.usuario
+    
 
     const [usuario,setUsuario] = useState<any>(null);
+        
+
 
     useEffect(() =>
     {

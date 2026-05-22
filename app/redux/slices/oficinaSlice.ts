@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Oficina } from "@/app/types/oficina"
 
 const initialState={
-    usuario:"",
+    oficina:"",
     token:""
 }
 
@@ -12,14 +12,14 @@ const oficinaSlice = createSlice(
         name: 'oficina',
         initialState,
         reducers:{
-            login:(state, action: PayloadAction<{usuario: string, token: string}>)=> {
+            login:(state, action: PayloadAction<{oficina: string, token: string}>)=> {
                 state.token = action.payload.token;
-                state.usuario = action.payload.usuario;
+                state.oficina = action.payload.oficina;
             },
 
             logout:(state)=>{
                 state.token = ""
-                state.usuario= ""
+                state.oficina= ""
 
             }
         }

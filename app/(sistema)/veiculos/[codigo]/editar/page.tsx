@@ -3,16 +3,15 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import VeiculoForm from "../../componentes/VeiculoForm";
-import { Veiculo, useVeiculo } from "@/app/context/VeiculoContext";
-import { useAuth } from "@/app/context/AuthContext";
-
+import { Veiculo } from "@/app/types/veiculos";
+import { buscarVeiculoPorId } from "@/app/services/veiculosService";
+import { store } from "@/app/redux/store";
 export default function EditarVeiculo(){
 
     const params = useParams()
     const router = useRouter()
     const codigo = Number(params.codigo);
-    const { buscarVeiculoPorId } = useVeiculo();
-    const { usuario } = useAuth();
+     const usuario = store.getState().auth.usuario
 
     const [veiculo,setVeiculo] = useState<Veiculo|null>(null);
 

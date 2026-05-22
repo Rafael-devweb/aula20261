@@ -2,9 +2,9 @@
 import { Cliente } from "../types/cliente";
 import api from "./api";
 
-export async function buscarListaClientes(oficinaId: number): Promise<Cliente[]> {
+export async function buscarListaClientes(): Promise<Cliente[]> {
     // Usando a concatenação de string que você prefere
-    const dados = await api.get<Cliente[]>('/clientes?oficinaId=' + oficinaId);
+    const dados = await api.get<Cliente[]>('/clientes');
 
     if (dados.status == 200) {
         return dados.data;
@@ -12,8 +12,8 @@ export async function buscarListaClientes(oficinaId: number): Promise<Cliente[]>
     return [];
 }
 
-export async function buscarClientePorId(id: number, oficinaId: number): Promise<Cliente | null> {
-    const dados = await api.get<Cliente>('/clientes/' + id + '?oficinaId=' + oficinaId);
+export async function buscarClientePorId(id: number): Promise<Cliente | null> {
+    const dados = await api.get<Cliente>('/clientes/' + id );
 
     if (dados.status == 200) {
         return dados.data;

@@ -1,7 +1,9 @@
 'use client'
-import { useAuth } from "@/app/context/AuthContext";
-import { useCliente } from "@/app/context/ClienteContext";
-import { Veiculo, useVeiculo } from "@/app/context/VeiculoContext";
+import { store } from "@/app/redux/store";
+import { buscarListaClientes } from "@/app/services/clienteService";
+import { atualizarVeiculo, salvarVeiculo } from "@/app/services/veiculosService";
+import { Cliente } from "@/app/types/cliente";
+import { Veiculo } from "@/app/types/veiculos";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
@@ -11,9 +13,7 @@ interface VeiculoFormProps {
 }
 
 export default function VeiculoForm({ veiculoExistente }: VeiculoFormProps) {
-    const { usuario } = useAuth();
-    const { clientes, carregarClientes } = useCliente();
-    const { salvarVeiculo, atualizarVeiculo } = useVeiculo();
+    const usuario = store.getState().auth.usuario
 
     const [veiculo, setVeiculo] = useState<Veiculo>(
         veiculoExistente || new Veiculo(null, '', '', '', '', null, usuario?.tipo === "OFICINA" ? usuario.id : usuario?.oficinaId)
@@ -21,12 +21,22 @@ export default function VeiculoForm({ veiculoExistente }: VeiculoFormProps) {
 
     const router = useRouter();
 
-    useEffect(() => {
-        const oficinaId = usuario?.tipo === "OFICINA" ? usuario?.id : usuario?.oficinaId;
-        if(oficinaId){
-            carregarClientes(oficinaId);
-        }
-    }, [usuario]);
+       const [clientes, setClientes] = useState<Cliente[]>([]);
+  
+      useEffect(() => {
+        carregarDados();
+      }, [usuario]);
+  
+      const carregarDados = async () =>{
+          const oficinaId = usuario?.tipo === "OFICINA" ? usuario?.id : usuario?.oficinaId;
+          if(oficinaId){
+  
+              var dadosCliente = await  buscarListaClientes();
+  
+  
+              setClientes(dadosCliente);
+          }
+      }
 
     const handleChange = (campo: 'placa' | 'marca' | 'modelo' | 'ano' | 'clienteId', valor: string) => {
         setVeiculo(prev =>

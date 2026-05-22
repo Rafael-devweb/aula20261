@@ -3,8 +3,8 @@ import api from "./api";
 import { Veiculo } from "@/app/types/veiculos"; // Certifique-se de que a classe/type está exportada em um arquivo de types
 
 
-export async function carregarVeiculos(oficinaId: number): Promise<Veiculo[]> {
-    const dados = await api.get<Veiculo[]>(`/veiculos?oficinaId=${oficinaId}`);
+export async function buscarListaVeiculos(): Promise<Veiculo[]> {
+    const dados = await api.get<Veiculo[]>('/veiculos');
 
     if (dados.status === 200) {
         return dados.data;

@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice"
 import { Oficina } from "../types/oficina";
-import oficinaReducer from "./slices/academiaSlice"
+import oficinaReducer from "./slices/oficinaSlice"
 
 
 export const store = configureStore({

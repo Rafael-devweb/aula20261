@@ -1,21 +1,29 @@
 'use client'
-import { useAuth } from "@/app/context/AuthContext";
-import { useCliente } from "@/app/context/ClienteContext";
+import { store } from "@/app/redux/store";
+import { buscarListaClientes } from "@/app/services/clienteService";
+import { Cliente } from "@/app/types/cliente";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Clientes() {
 
-    const { usuario } = useAuth();
-    const { clientes, carregarClientes } = useCliente();
+ const usuario = store.getState().auth.usuario
+     const [clientes, setClientes] = useState<Cliente[]>([]);
 
     useEffect(() => {
-        const oficinaId = usuario?.tipo === "OFICINA" ? usuario?.id : usuario?.oficinaId;
-        if(oficinaId){
-            carregarClientes(oficinaId);
-        }
+      carregarDados();
     }, [usuario]);
 
+    const carregarDados = async () =>{
+        const oficinaId = usuario?.tipo === "OFICINA" ? usuario?.id : usuario?.oficinaId;
+        if(oficinaId){
+
+            var dadosCliente = await  buscarListaClientes();
+
+
+            setClientes(dadosCliente);
+        }
+    }
     return (
         <div className="p-6 max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-8">

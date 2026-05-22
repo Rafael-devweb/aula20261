@@ -1,24 +1,34 @@
 'use client'
 
-import { useCliente } from "@/app/context/ClienteContext";
-import { useVeiculo } from "@/app/context/VeiculoContext";
 import { store } from "@/app/redux/store";
-import { useEffect } from "react";
+import { buscarListaClientes } from "@/app/services/clienteService";
+import { buscarListaVeiculos } from "@/app/services/veiculosService";
+import { Cliente } from "@/app/types/cliente";
+import { Veiculo } from "@/app/types/veiculos";
+import { useEffect, useState } from "react";
 
 export default function Home(){
-    const { clientes, carregarClientes } = useCliente();
-    const { veiculos, carregarVeiculos } = useVeiculo();
 
+    const [veiculos, setVeiculo] = useState<Veiculo[]>([]);
+     const [clientes, setClientes] = useState<Cliente[]>([]);
     const usuario = store.getState().auth.usuario;
 
     useEffect(() => {
-        const oficinaId = usuario?.tipo === "OFICINA" ? usuario?.id : usuario?.oficinaId;
-        if(oficinaId){
-            carregarClientes(oficinaId);
-            carregarVeiculos(oficinaId);
-        }
+      carregarDados();
     }, [usuario]);
 
+    const carregarDados = async () =>{
+        const oficinaId = usuario?.tipo === "OFICINA" ? usuario?.id : usuario?.oficinaId;
+        if(oficinaId){
+
+            var dadosCliente = await  buscarListaClientes();
+
+            var dadosVeiculo = await  buscarListaVeiculos();
+
+            setVeiculo(dadosVeiculo);
+            setClientes(dadosCliente);
+        }
+    }
     return(
         <div className="space-y-6">
             <div className="rounded-2xl border border-zinc-600 bg-gradient-to-r from-zinc-800 to-slate-800 p-6">

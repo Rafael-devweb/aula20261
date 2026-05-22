@@ -1,4 +1,4 @@
-// @/app/types/cliente.ts
+// No seu arquivo de types do cliente, certifique-se de que está assim:
 export class Cliente {
     constructor(
         public id: number | null = null,
@@ -9,4 +9,9 @@ export class Cliente {
         public endereco: string = '',
         public oficinaId: number | null = null
     ) { }
+}
+
+// Criado na mesma linha de raciocínio do "UsuarioFormProps" do professor
+export interface ClienteFormProps {
+    clienteExistente?: Cliente
 }

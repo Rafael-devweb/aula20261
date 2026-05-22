@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "./context/AuthContext";
-import { ClienteProvider } from "./context/ClienteContext";
-import { VeiculoProvider } from "./context/VeiculoContext";
 import StoreProvider from "./redux/StoreProvider";
 
 const geistSans = Geist({
@@ -29,14 +26,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
       <body>
-        <StoreProvider>
-        <AuthProvider>
-          <ClienteProvider>
-            <VeiculoProvider>
-              {children}
-            </VeiculoProvider>
-          </ClienteProvider>
-        </AuthProvider>
+         <StoreProvider>
+            {children}
         </StoreProvider>
       </body>
     </html>

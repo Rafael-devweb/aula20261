@@ -21,7 +21,6 @@ public class UsuarioService {
     public boolean ValidaUsuarioSenha(LoginRequest loginRequest) {
         try {
 
-
             return usuarioRepository.existsUsuarioByEmailAndSenha(loginRequest.email(), loginRequest.senha());
 
         } catch (Exception e) {

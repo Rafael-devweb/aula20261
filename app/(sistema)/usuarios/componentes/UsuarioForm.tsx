@@ -1,17 +1,19 @@
 'use client'
-import { useAuth } from "@/app/context/AuthContext";
+import { store } from "@/app/redux/store";
+import { Usuario } from "@/app/types/usuarios";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react"
+
 
 interface UsuarioFormProps {
     usuarioExistente?: any
 }
 
 export default function UsuarioForm({ usuarioExistente }: UsuarioFormProps) {
-    const { usuario: usuarioLogado } = useAuth();
 
+     const usuarioLogado = store.getState().auth.usuario
     const [usuario, setUsuario] = useState<any>(
         usuarioExistente || {
             id: null,
