@@ -28,22 +28,6 @@ public class VeiculoSyncService {
     @Value("${spring.secretKey}")
     private String secretKey;
 
-    // As 10 marcas mais vendidas no Brasil com seus IDs na NHTSA
-    private static final List<MarcaRef> MARCAS_BRASIL = List.of(
-            new MarcaRef(474,  "Chevrolet"),
-            new MarcaRef(448,  "Fiat"),
-            new MarcaRef(482,  "Volkswagen"),
-            new MarcaRef(476,  "Ford"),
-            new MarcaRef(499,  "Toyota"),
-            new MarcaRef(475,  "Hyundai"),
-            new MarcaRef(467,  "Jeep"),
-            new MarcaRef(497,  "Renault"),
-            new MarcaRef(479,  "Honda"),
-            new MarcaRef(492,  "Nissan")
-    );
-
-
-    private record MarcaRef(int makeId, String nome) {}
 
     @Transactional
     public SyncResultDTO sincronizarMarcasBrasil(SyncRequest request) {
@@ -51,20 +35,17 @@ public class VeiculoSyncService {
             throw new IllegalArgumentException("Acesso invalido!");
         }
 
-        // Nomes que a gente quer — o ID vai ser resolvido pela NHTSA
         Set<String> nomesMarcasBrasil = Set.of(
                 "Chevrolet", "Fiat", "Volkswagen", "Ford", "Toyota",
                 "Hyundai", "Jeep", "Renault", "Honda", "Nissan"
         );
 
-        // Busca todas as marcas e filtra pelos nomes
         List<NhtsaMakeDTO> marcasFiltradas = nhtsaClient.buscarTodasMarcas()
                 .stream()
                 .filter(m -> nomesMarcasBrasil.stream()
                         .anyMatch(nome -> nome.equalsIgnoreCase(m.Make_Name())))
                 .toList();
 
-        // Loga pra você confirmar os IDs reais
         marcasFiltradas.forEach(m ->
                 System.out.println("Marca encontrada: [" + m.Make_Name() + "] ID: " + m.Make_ID()));
 
