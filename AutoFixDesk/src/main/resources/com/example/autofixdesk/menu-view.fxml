@@ -5,9 +5,27 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.autofixdesk.MenuController">
    <children>
-
-       <Button onAction="#onCadastroUsuarioButtonClick" layoutX="122.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="211.0" text="Cadastro de Usuário" />
-       <Button onAction="#onVoltarButtonClick" layoutX="28.0" layoutY="313.0" mnemonicParsing="false" text="Voltar" />
+      <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+             <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Menu Principal" />
+            
+             <Button mnemonicParsing="false" onAction="#onCadastroUsuarioButtonClick" prefHeight="40.0" prefWidth="250.0" text="Cadastro de Usuário" />
+      
+             <Separator maxWidth="300.0" />
+      
+             <VBox alignment="CENTER" spacing="10.0">
+                <children>
+                    <Label style="-fx-font-weight: bold;" text="Base de Veículos" />
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button fx:id="btnSyncVeiculos" onAction="#handleSyncVeiculos" prefHeight="30.0" prefWidth="220.0" text="🔄 Popular Marcas e Modelos" />
+                        <ProgressIndicator fx:id="progressSync" prefHeight="24" prefWidth="24" visible="false" />
+                    </HBox>
+                    <Label fx:id="lblStatusSync" style="-fx-text-fill: gray;" text="" wrapText="true" />
+                </children>
+             </VBox>
+      
+             <Button mnemonicParsing="false" onAction="#onVoltarButtonClick" prefHeight="30.0" prefWidth="100.0" text="Sair" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
-

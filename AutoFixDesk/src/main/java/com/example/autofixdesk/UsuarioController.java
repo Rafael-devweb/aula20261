@@ -14,6 +14,7 @@ import javax.print.DocFlavor;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static com.example.autofixdesk.LoginController.showMenssage;
 
@@ -43,7 +44,7 @@ public class UsuarioController {
         private void onSalvarButtonClick(ActionEvent event)  throws IOException {
 
 
-            DocFlavor.URL url = new DocFlavor.URL("http://localhost:8080/usuarios/adm");
+            URL url = new URL("http://localhost:8080/usuarios/adm");
 
             HttpURLConnection conn =(HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
@@ -81,4 +82,3 @@ public class UsuarioController {
         }
     }
 
-}
